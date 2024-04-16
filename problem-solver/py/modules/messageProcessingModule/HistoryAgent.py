@@ -95,7 +95,7 @@ class HistoryAgent(ScAgentClassic):
                 print(1)
                 array = page("Город " + city_idtf + " (Беларусь)").images
                 print(2)
-                description1 = f'<img src="{array[0]}" style="width: 100%; border-radius: 10px; margin-bottom: 10px;">' + "<br>" + summary(
+                description1 = f'<img src="{array[-1]}" style="width: 100%; border-radius: 10px; margin-bottom: 10px;">' + "<br>" + summary(
                     "Город " + city_idtf + " (Беларусь)", sentences=4)
                 print(3)
             except:

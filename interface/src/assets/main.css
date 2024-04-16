@@ -519,6 +519,10 @@ body,
     .iBkjds {
         width: 100%;
     }
+
+    .kkk {
+        max-width: 80% !important;
+    }
 }
 
 .djgayP,
@@ -562,4 +566,8 @@ body,
 .dWagGp {
     border-radius: 10px !important;
     background-color: #43494b !important;
+}
+
+.kkk {
+    color: rgb(38, 84, 141);
 }

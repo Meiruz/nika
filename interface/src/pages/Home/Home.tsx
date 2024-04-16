@@ -76,17 +76,23 @@ export const Home = () => {
             check();
 
             setParams(await getUserSettings(cookieUserAddr));
+        })();
+    }, []);
 
+    useEffect(() => {
+        (async () => {
             await fetch('http://ip-api.com/json/')
                 .then((result) => result.json())
                 .then(async (result) => {
-                    setCity(result['city']);
                     await fetch(
-                        `https://api.openweathermap.org/data/2.5/weather?appid=${weather_api_key}&lat=${result['lat']}&lon=${result['lon']}`,
+                        `https://api.openweathermap.org/data/2.5/weather?appid=${weather_api_key}&lat=${
+                            result.lat
+                        }&lon=${result.lon}&lang=${params['nrel_lang'] || 'ru'}`,
                     )
                         .then((res) => res.json())
                         .then((res) => {
                             setTemp(String(Math.round(parseFloat(res['main']['temp']) - 273.15)) as string);
+                            setCity(res['name']);
                             const description = res['weather'][0]['main'];
                             if (description == 'Clear')
                                 setIcon(
@@ -115,7 +121,7 @@ export const Home = () => {
                         });
                 });
         })();
-    }, []);
+    }, [params]);
 
     useEffect(() => {
         (async () => {})();
@@ -177,9 +183,9 @@ export const Home = () => {
                         <WrapperBtns>
                             <BtnGames
                                 style={{ fontSize: getFontSizeFromSettings(params['nrel_font_size']) }}
-                                href={routes.CHAT}
+                                href={routes.GAMES}
                             >
-                                {translateWord('Развлечения', params['nrel_lang'])}
+                                {translateWord('Игры', params['nrel_lang'])}
                             </BtnGames>
                             <BtnSaved href={routes.SAVED}>
                                 <WrapperSaved>

@@ -49,7 +49,7 @@ export const Message = ({
     const WrapperMessage = styled.div<{ isLeft: boolean }>`
         position: relative;
         width: fit-content;
-        max-width: 70%;
+        max-width: 50%;
         margin: 0px 18px 8px 16px;
         padding: 12px 12px 12px 12px;
         align-self: ${(props) => (props.isLeft ? 'start' : 'end')};
@@ -71,7 +71,7 @@ export const Message = ({
     return (
         <>
             <>
-                <WrapperMessage isLeft={isLeft}>
+                <WrapperMessage className='kkk' isLeft={isLeft}>
                     <Text style={{ fontSize: getFontSizeFromSettings(fontSize) }}>
                         <TextWrapper> {children}</TextWrapper>
                     </Text>

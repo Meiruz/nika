@@ -129,7 +129,7 @@ class WeatherAgent(ScAgentClassic):
         # get weather
         BASE_URL = "https://api.openweathermap.org/data/2.5/weather?"
         API_KEY = "b2c6abeb0bfa8c28395919438f4eb3d1"
-        url = BASE_URL + "appid=" + API_KEY + "&lat=" + str(coordinates['lat']) + '&lon=' + str(coordinates['lon'])
+        url = BASE_URL + "appid=" + API_KEY + "&lat=" + str(coordinates['lat']) + '&lon=' + str(coordinates['lon']) + "&lang=ru"
         responce = requests.get(url).json()
         self.logger.info(f"{url}")
 

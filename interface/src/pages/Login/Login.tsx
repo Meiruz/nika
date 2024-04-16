@@ -156,7 +156,7 @@ export const Login = () => {
                         <Input
                             type="text"
                             name="username"
-                            placeholder={translateWord('Email', navigator.language)}
+                            placeholder={translateWord('Имя пользователя', navigator.language)}
                             onChange={updateUsername}
                             required
                         ></Input>
@@ -183,7 +183,7 @@ export const Login = () => {
                         <FormBtn type="submit" id="submit" onClick={check}>
                             {translateWord('Войти', navigator.language)}
                         </FormBtn>
-                        <Link href={routes.REGISTRATION}>{translateWord('еще нет аккаунта?', navigator.language)}</Link>
+                        <Link href={routes.REGISTRATION}>{translateWord('Еще нет аккаунта?', navigator.language)}</Link>
                     </Form>
                 </WrapperContent>
             </Wrapper>

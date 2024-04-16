@@ -193,7 +193,7 @@ export const Registration = () => {
                         <Input
                             type="string"
                             name="username"
-                            placeholder={translateWord('Email', navigator.language)}
+                            placeholder={translateWord('Имя пользователя', navigator.language)}
                             onChange={updateUsername}
                             required
                         ></Input>

@@ -40,6 +40,15 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s | %(name)s | %(message)s", datefmt="[%d-%b-%y %H:%M:%S]"
 )
 
+stations = [
+    ["Малиновка", "Петровщина", "Михалово", "Грушевка", "Институт Культуры", "Площадь Ленина", "Октябрьская", "Площадь Победы", "Площадь Якуба Коласа", "Академия Наук", "Парк Челюскинцев", "Московская", "Восток", "Борисовский тракт", "Уручье"], 
+    ["Могилевская", "Автозаводская", "Партизанская", "Тракторный завод", "Пролетарская", "Первомайская", "Купаловская", "Немига", "Фрунзенская", "Молодежная", "Пушкинская", "Спортивная", "Кунцевщина", "Каменная горка"], 
+    ["Слуцкий Гостинец", "Неморшанский сад", "Аэродромная", "Ковальская Слобода", "Вокзальная", "Площадь Франтишка Богушевича", "Площадь Юбилейная"]
+]
+
+lines = ["Московская", "Автозаводская", "Зеленолужская"]
+colors = ["rgb(38, 84, 141)", "rgb(150, 68, 68)", "rgb(68, 150, 68)"]
+
 
 class FindMetroStationAgent(ScAgentClassic):
     def __init__(self):
@@ -83,15 +92,20 @@ class FindMetroStationAgent(ScAgentClassic):
             second_place = self.change_translate(second_place[3:].lower())
             print(second_place)
             
-            response1 = requests.get(f"https://nominatim.openstreetmap.org/search.php?q={first_place}, Минск&format=json").json()
-            response2 = requests.get(f"https://nominatim.openstreetmap.org/search.php?q={second_place}, Минск&format=json").json()
+            response1 = requests.get(f"https://nominatim.openstreetmap.org/search.php?q={first_place}, Минск&format=jsonv2").json()
+            response2 = requests.get(f"https://nominatim.openstreetmap.org/search.php?q={second_place}, Минск&format=jsonv2").json()
+            
+            print(response1)
 
             ip_first_place = f"{response1[0]['lon']}, {response1[0]['lat']}"
+            print("Ok")
             ip_second_place = f"{response2[0]['lon']}, {response2[0]['lat']}"
+            print("Ok")
+
 
             print(f'{ip_first_place} {ip_second_place}');
         except:
-            answer = choice([f'К сожалению, не удалось распознать, куда вам надо.'])
+            answer = choice([f'К сожалению, не удалось распознать, куда вам надо. {first_place} {second_place}.', f'Не распознано. {first_place} {second_place}.'])
 
             link = create_link(
                 answer, ScLinkContentType.STRING, link_type=sc_types.LINK_CONST)
@@ -152,8 +166,6 @@ class FindMetroStationAgent(ScAgentClassic):
             d_in = hs.haversine(self.return_coord(coordinates, 1), self.return_coord(ip_first_place), unit=Unit.KILOMETERS)
             d_out = hs.haversine(self.return_coord(coordinates, 1), self.return_coord(ip_second_place), unit=Unit.KILOMETERS)
 
-
-
             if d_in < min_d_in:
                 min_d_in = d_in
                 station_in = metro_station_addr
@@ -163,7 +175,66 @@ class FindMetroStationAgent(ScAgentClassic):
                 station_out = metro_station_addr
         print(station_in)
         # Оформление вывода
-        answer = choice([f'Для того, чтобы добраться {first} {second} вам необходимо пройти к станции {get_link_content_data(self.get_ru_idtf(station_in))} и ехать до станции {get_link_content_data(self.get_ru_idtf(station_out))}'])
+
+        s1 = get_link_content_data(self.get_ru_idtf(station_in))
+        s2 = get_link_content_data(self.get_ru_idtf(station_out))
+        no = -1
+
+        print(f'|{s1} {s2}|');
+
+        if s1 in stations[0] and s2 in stations[0]:
+            no = 0;
+        elif s1 in stations[1] and s2 in stations[1]:
+            no = 1;
+        elif s1 in stations[2] and s2 in stations[2]:
+            no = 2;
+        
+        answer = "";
+
+        
+        if no != -1:
+            answer = f'<a href="https://metropoliten.by/upload/map4.jpg"><img style="max-width: 100%; width: 100%; margin-bottom: 8px; border-radius: 8px;" src="https://metropoliten.by/upload/map4.jpg"></img></a><p>Для того, чтобы добраться {first} {second} вам необходимо пройти к станции <a href="https://yandex.by/maps/21144/lida/search/метро {s1}" style="color: {colors[no]}">{s1}</a> и ехать до <a href="https://yandex.by/maps/21144/lida/search/метро {s2}" style="color: {colors[no]}">станции {s2}</a></p>'
+        else:
+            lineStart = ""
+            lineEnd = ''
+            k = ""
+
+            if s1 in stations[0]:
+                lineStart = lines[0]
+                k += '1'
+            elif s1 in stations[1]:
+                lineStart = lines[1]
+                k += '2'
+            elif s1 in stations[2]:
+                lineStart = lines[2]
+                k += '3'
+
+            if s2 in stations[0]:
+                lineEnd = lines[0]
+                k += '1'
+            elif s2 in stations[1]:
+                lineEnd = lines[1]
+                k += '2'
+            elif s2 in stations[2]:
+                lineEnd = lines[2]
+                k += '3'
+
+            stationLine = "";
+            print(k)
+
+            if k == '12':
+                stationLine = "Октябрьская"
+            if k == '21':
+                stationLine = "Купаловская"
+            elif k == '23':
+                stationLine = "Фрунзенская"
+            elif k == '32':
+                stationLine = "Площадь Юбилейная"
+            elif k == '13':
+                stationLine = "Площадь Ленина"
+            elif k == '31':
+                stationLine = "Вокзальная"
+            answer += f'<a href="https://metropoliten.by/upload/map4.jpg"><img style="max-width: 100%; width: 100%; margin-bottom: 8px; border-radius: 8px;" src="https://metropoliten.by/upload/map4.jpg"></img></a><p>Для того, чтобы добраться {first} {second} вам необходимо пройти к <a href="https://yandex.by/maps/21144/lida/search/метро {s1}" style="color: {colors[int(k[0])-1]}">станции {s1}</a> и ехать до <a href="https://yandex.by/maps/21144/lida/search/метро {s2}" style="color: {colors[int(k[1])-1]}">станции {s2}</a></p> Вам придется пересесть с линии <span style="color: {colors[int(k[0])-1]}">{lineStart}</span> на <span style="color: {colors[int(k[1])-1]}">{lineEnd}</span> на <a href="https://yandex.by/maps/21144/lida/search/метро {stationLine}" style="color: {colors[int(k[0])-1]}">странции {stationLine}</a>.';
 
         self.logger.info(f"FindMetroStationAgent: Answer: {answer}")
 
@@ -227,7 +298,6 @@ class FindMetroStationAgent(ScAgentClassic):
     def change_translate(self, s):
         print(s)
         if s.find('улицы') > -1:
-            print("Found")
             s = s.replace('улицы', "улица")
         if s.find('проезда') > -1:
             s = s.replace('проезда', 'проезд')

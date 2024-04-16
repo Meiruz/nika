@@ -23,11 +23,20 @@ const Home = loadingComponent(lazy(() => import('@pages/Home')));
 const Settings = loadingComponent(lazy(() => import('@pages/Settings')));
 const Saved = loadingComponent(lazy(() => import('@pages/Saved')));
 const OwnMap = loadingComponent(lazy(() => import('@pages/OwnMap')));
+const Games = loadingComponent(lazy(() => import('@pages/Games')));
 
 const DemoRoutes = () => (
     <>
         <Route path={routes.CHAT}>
             <Demo />
+        </Route>
+    </>
+);
+
+const GamesRoute = () => (
+    <>
+        <Route path={routes.GAMES}>
+            <Games />
         </Route>
     </>
 );
@@ -170,6 +179,7 @@ export const App = () => {
             <SettingsRoutes />
             <IntroRoutes />
             <OwnMapRoutes />
+            <GamesRoute />
         </Content>
     );
 };

@@ -187,6 +187,8 @@ export const translateWord = (text: string, lang: string) => {
         if (text == 'войти') return 'Sign in';
         if (text == 'email') return 'Email';
         if (text == 'пароль') return 'Password';
+        if (text == 'имя пользователя') return 'Username';
+        if (text == 'игры') return 'Games';
         if (text == 'повторите пароль') return 'Repeat password';
         if (text == 'создать') return 'Create';
         if (text == 'уже есть аккаунт?') return 'Already have an account?';
