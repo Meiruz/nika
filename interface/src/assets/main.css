@@ -569,5 +569,19 @@ body,
 }
 
 .kkk {
-    color: rgb(38, 84, 141);
+    color: rgb(68, 150, 68);
+}
+
+.hover_image {
+    overflow: hidden;
+    margin-bottom: 8px;
+    border-radius: 12px;
+}
+
+.hover_image img {
+    transition: all 0.5s ease;
+}
+
+.hover_image:hover img {
+    scale: 1.4;
 }

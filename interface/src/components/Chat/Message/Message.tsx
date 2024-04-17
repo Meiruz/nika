@@ -71,7 +71,7 @@ export const Message = ({
     return (
         <>
             <>
-                <WrapperMessage className='kkk' isLeft={isLeft}>
+                <WrapperMessage className="kkk" isLeft={isLeft}>
                     <Text style={{ fontSize: getFontSizeFromSettings(fontSize) }}>
                         <TextWrapper> {children}</TextWrapper>
                     </Text>

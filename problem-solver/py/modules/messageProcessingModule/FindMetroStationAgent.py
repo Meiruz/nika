@@ -193,7 +193,7 @@ class FindMetroStationAgent(ScAgentClassic):
 
         
         if no != -1:
-            answer = f'<a href="https://metropoliten.by/upload/map4.jpg"><img style="max-width: 100%; width: 100%; margin-bottom: 8px; border-radius: 8px;" src="https://metropoliten.by/upload/map4.jpg"></img></a><p>Для того, чтобы добраться {first} {second} вам необходимо пройти к станции <a href="https://yandex.by/maps/21144/lida/search/метро {s1}" style="color: {colors[no]}">{s1}</a> и ехать до <a href="https://yandex.by/maps/21144/lida/search/метро {s2}" style="color: {colors[no]}">станции {s2}</a></p>'
+            answer = f'<a href="https://metropoliten.by/upload/map4.jpg"><img style="max-width: 100%; width: 100%; margin-bottom: 8px; border-radius: 8px;" src="https://metropoliten.by/upload/map4.jpg"></img></a><p>Для того, чтобы добраться {first} {second} вам необходимо пройти к станции <a href="https://yandex.by/maps/21144/lida/search/метро {s1}" style="color: {colors[no]} !important">{s1}</a> и ехать до <a href="https://yandex.by/maps/21144/lida/search/метро {s2}" style="color: {colors[no]} !important">станции {s2}</a>.</p>'
         else:
             lineStart = ""
             lineEnd = ''
@@ -234,7 +234,7 @@ class FindMetroStationAgent(ScAgentClassic):
                 stationLine = "Площадь Ленина"
             elif k == '31':
                 stationLine = "Вокзальная"
-            answer += f'<a href="https://metropoliten.by/upload/map4.jpg"><img style="max-width: 100%; width: 100%; margin-bottom: 8px; border-radius: 8px;" src="https://metropoliten.by/upload/map4.jpg"></img></a><p>Для того, чтобы добраться {first} {second} вам необходимо пройти к <a href="https://yandex.by/maps/21144/lida/search/метро {s1}" style="color: {colors[int(k[0])-1]}">станции {s1}</a> и ехать до <a href="https://yandex.by/maps/21144/lida/search/метро {s2}" style="color: {colors[int(k[1])-1]}">станции {s2}</a></p> Вам придется пересесть с линии <span style="color: {colors[int(k[0])-1]}">{lineStart}</span> на <span style="color: {colors[int(k[1])-1]}">{lineEnd}</span> на <a href="https://yandex.by/maps/21144/lida/search/метро {stationLine}" style="color: {colors[int(k[0])-1]}">странции {stationLine}</a>.';
+            answer += f'<div class="hover_image"><a href="https://metropoliten.by/upload/map4.jpg"><img style="max-width: 100%; width: 100; border-radius: 8px;" src="https://metropoliten.by/upload/map4.jpg"></img></div></a><p>Для того, чтобы добраться {first} {second} вам необходимо пройти к <a href="https://yandex.by/maps/21144/lida/search/метро {s1}" style="color: {colors[int(k[0])-1]} !important">станции {s1}</a> и ехать до <a href="https://yandex.by/maps/21144/lida/search/метро {s2}" style="color: {colors[int(k[1])-1]} !important">станции {s2}</a></p> Вам придется пересесть с линии <span style="color: {colors[int(k[0])-1]} !important">{lineStart}</span> на <span style="color: {colors[int(k[1])-1]} !important">{lineEnd}</span> на <a href="https://yandex.by/maps/21144/lida/search/метро {stationLine}" style="color: {colors[int(k[0])-1]} !important">странции {stationLine}</a>.';
 
         self.logger.info(f"FindMetroStationAgent: Answer: {answer}")
 
